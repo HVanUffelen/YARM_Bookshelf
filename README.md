@@ -7,7 +7,7 @@ to install package
 
 > composer require yarm/bookshelf
 
-publish routes/config/views/js/
+publish routes, config, views, JS...
 
 > php artisan vendor:publish --provider="Yarm\Bookshelf\BookshelfServiceProvider" --force
 
