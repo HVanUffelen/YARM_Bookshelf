@@ -1,6 +1,6 @@
 {
     "name": "yarm/bookshelf",
-    "description": "Pkg bookshelf",
+    "description": "An add-on for the YARM Reference Manager Application. Contains the bookshelf feature",
     "type": "library",
     "license": "MIT",
     "authors": [
