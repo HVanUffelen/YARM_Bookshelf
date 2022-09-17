@@ -29,11 +29,7 @@ class BookshelfController extends Controller
     {
         $this->middleware('auth');
     }
-
-
-    /**
-     * Delete item from bookshelf
-     * @param Request $request
+    /**Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public static function destroy(Request $request)
