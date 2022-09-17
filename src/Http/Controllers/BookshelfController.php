@@ -181,7 +181,7 @@ class BookshelfController extends Controller
                 'html' => 'Html',
                 'odt' => 'Odt',
                 'pdf' => 'Pdf',
-                'word' => 'Word',
+                'docx' => 'Word',
             ]
         ];
 
@@ -223,7 +223,7 @@ class BookshelfController extends Controller
         $template = ($request['sidebar'] == true) ? 'bookshelf_data_sidebar_inc' : 'bookshelf_data_inc';
         $paginationValue = 5;// todo this should probably be set via the user preferences
 
-       if ($request->ajax()) {
+        if ($request->ajax()) {
             $data = self::getBookshelfData($blade, $paginationValue, $request);
             return view('bookshelf::inc.' . $template, $data);
         }
@@ -410,12 +410,12 @@ class BookshelfController extends Controller
     {
         //No conversion to tei, xml, txt and zip
         //Todo epub is broken
-        //$mtypes = ['pdf', 'word', 'html', 'epub'];
-        $mtypes = ['pdf', 'word', 'html'];
+        //$mtypes = ['pdf', 'docx', 'html', 'epub'];
+        $mtypes = ['pdf', 'docx', 'html'];
         $linkType = (isset($link['type'])) ? $link['type'] : 'zip';
 
         $noConversion = ($linkType == 'pdf' && $link['convertible'] == true)
-            ? ['word', 'epub'] : ['pdf', 'word', 'epub'];
+            ? ['docx', 'epub'] : ['pdf', 'docx', 'epub'];
 
         foreach ($mtypes as $format) {
             //Don't show icon for file that can be downloaded and  types that are excluded
@@ -433,7 +433,7 @@ class BookshelfController extends Controller
      */
     private static function convertible($comment, $id, $name)
     {
-        $typesForDownload = array('pdf', 'word', 'html', 'txt', 'xml', 'tei', 'zip');
+        $typesForDownload = array('pdf', 'docx', 'html', 'txt', 'xml', 'tei', 'zip');
         $convertible = false;
         $book = Shelf_book::find($id);
 
