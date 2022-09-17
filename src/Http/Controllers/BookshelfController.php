@@ -491,8 +491,8 @@ class BookshelfController extends Controller
     private static function forHTTP($name, $book, $typesForDownload, $convertible, $type)
     {
         if (self::checkUrlExists($name) !== false) {
-            if (strpos(strtolower($name), 'phaidra') !== false) {
-                $url = DownloadController::tryToConvertURLToPhaidraDownloadLink($name);
+            if (config('phaidra.phaidra_present') === 'True' && strpos(strtolower($name), 'phaidra') !== false) {
+                $url = \Yarm\Phaidra\Http\Controllers\PhaidraController::tryToConvertURLToPhaidraDownloadLink($name);
                 $type = self::checkTypeOfDownloadlink($url);
                 $book->type = self::makeTypeFromMimeType($type, $typesForDownload);
 
