@@ -177,7 +177,7 @@ class BookshelfController extends Controller
                 'html' => 'Html',
                 'odt' => 'Odt',
                 'pdf' => 'Pdf',
-                'docx' => 'Word',
+                'word' => 'Word',
             ]
         ];
 
@@ -406,12 +406,12 @@ class BookshelfController extends Controller
     {
         //No conversion to tei, xml, txt and zip
         //Todo epub is broken
-        //$mtypes = ['pdf', 'docx', 'html', 'epub'];
-        $mtypes = ['pdf', 'docx', 'html'];
+        //$mtypes = ['pdf', 'word', 'html', 'epub'];
+        $mtypes = ['pdf', 'word', 'html'];
         $linkType = (isset($link['type'])) ? $link['type'] : 'zip';
 
         $noConversion = ($linkType == 'pdf' && $link['convertible'] == true)
-            ? ['docx', 'epub'] : ['pdf', 'docx', 'epub'];
+            ? ['word', 'epub'] : ['pdf', 'word', 'epub'];
 
         foreach ($mtypes as $format) {
             //Don't show icon for file that can be downloaded and  types that are excluded
