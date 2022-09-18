@@ -29,6 +29,7 @@ class BookshelfController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -198,12 +199,6 @@ class BookshelfController extends Controller
     }
 
 
-
-
-
-
-
-
     /**
      * Send data to sidebar view or main bookshelf inc
      * @param Request $request
@@ -273,7 +268,7 @@ class BookshelfController extends Controller
         if (isset($request)) $q = str_replace(" ", "%", $request->get('query'));
 
         if (!isset($request['sort1'])) $request = SortController::makeSortorderArray($request);
-        $query =  JoinController::buildJoints($roles, $request)->groupBy('refs.id');
+        $query = JoinController::buildJoints($roles, $request)->groupBy('refs.id');
 
         //Check if blade is sidebar and set pagination, else make data for main bookshelf form
         $query = self::buildQueryBasedOnParams($query, $blade, $idsArray, $q ?? '');
@@ -399,6 +394,7 @@ class BookshelfController extends Controller
             return false;
 
     }
+
     /**
      * Formats for convert and download
      * @param $link //Includes data (type, if convertible,..)
@@ -407,17 +403,20 @@ class BookshelfController extends Controller
     private static function makeArrayFormats($link)
     {
         //No conversion to tei, xml, txt and zip
+
         //Todo epub is broken
         //$mtypes = ['pdf', 'word', 'html', 'epub'];
+
         $mtypes = ['pdf', 'word', 'html'];
         $linkType = (isset($link['type'])) ? $link['type'] : 'zip';
 
         $noConversion = ($linkType == 'pdf' && $link['convertible'] == true)
             ? ['word', 'epub'] : ['pdf', 'word', 'epub'];
 
-        if ($link['readable'] == "true") {
-            foreach ($mtypes as $format) {
-                //Don't show icon for file that can be downloaded and  types that are excluded
+        foreach ($mtypes as $format) {
+            if ($link['type'] == 'pdf' && $link['readable'] !== "true") {
+                continue;
+            } else {
                 if (($format != $linkType) && (!is_numeric(array_search($linkType, $noConversion)))) $arrayFormats[] = $format;
             }
         }
@@ -528,6 +527,7 @@ class BookshelfController extends Controller
         }
         return [$book, $convertible, $type];
     }
+
     /**
      * Checks if pdf is downloadable and readable
      * @param $file
@@ -564,7 +564,6 @@ class BookshelfController extends Controller
         return (strpos(strtolower($file), 'http') == false)
             ? self::fileExistInUploads($book, $file) : false;
     }
-
 
 
     /**
