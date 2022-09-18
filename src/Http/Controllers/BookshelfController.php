@@ -387,8 +387,10 @@ class BookshelfController extends Controller
             $link['convertible'] = $convertible;
             $link['downloaded'] = $downloaded;
             $link['unzipped'] = $file['unzipped'];
-            $link['pathAndName'] = ($file['unzipped'] == 'true') || ($file['downloaded'] == 'true')
-                ? ((!$file_id_Present && $file['downloaded'] == 'true') ? '/downloaded/' . $pathAndName : '/unzipped/' . $pathAndName) : '';
+            $link['readable'] = $file['readable'];
+            $link['pathAndName'] = ($file['unzipped'] == 'true') || ($file['downloaded'] == 'true') ?
+                ((!$file_id_Present && $file['downloaded'] == 'true') ? '/downloaded/' . $pathAndName : '/unzipped/' . $pathAndName)
+                : '';
             $link['type'] = $type;
             $link['formats'] = self::makeArrayFormats($link);
 
@@ -413,10 +415,13 @@ class BookshelfController extends Controller
         $noConversion = ($linkType == 'pdf' && $link['convertible'] == true)
             ? ['word', 'epub'] : ['pdf', 'word', 'epub'];
 
-        foreach ($mtypes as $format) {
-            //Don't show icon for file that can be downloaded and  types that are excluded
-            if (($format != $linkType) && (!is_numeric(array_search($linkType, $noConversion)))) $arrayFormats[] = $format;
+        if ($link['readable'] == "true") {
+            foreach ($mtypes as $format) {
+                //Don't show icon for file that can be downloaded and  types that are excluded
+                if (($format != $linkType) && (!is_numeric(array_search($linkType, $noConversion)))) $arrayFormats[] = $format;
+            }
         }
+
         return $arrayFormats ?? [];
     }
 
@@ -543,7 +548,7 @@ class BookshelfController extends Controller
             self::ifFileDontExistAddIt($file, $path_name);
 
             if (storage::exists($path_name) === false || ($book->pathAndName == null)) $book->pathAndName = $name . '/' . $file_name;
-            $book->downloaded = (storage::exists($path_name) === false || ($book->pathAndName == null)) ? 'true' : 'false';
+            $book->downloaded = (storage::exists($path_name) === false || ($book->pathAndName == null)) ? 'false' : 'true';
             $book->save();
 
             if (storage::exists($path_name) === false && $book->readable != 'true')
