@@ -43,7 +43,7 @@
                                 @php(($filePath = ($file['downloaded'] != 'false') ? $file['pathAndName'] : $file['fileName']))
                             </td>
                             <td><a title="@lang('Download file')"
-                                   href="/dlbt/downloadFile/?name={{ $filePath }}&Id={{$fileID}}&Downloaded={{$file['downloaded']}}&Readable={{$file['readable']}}"><i
+                                   href="/dlbt/downloadFile/?name={{ $filePath }}&{{$type}}_id={{$fileID}}&Downloaded={{$file['downloaded']}}&Readable={{$file['readable']}}"><i
                                         class="fa fa-download mr-1"
                                         style="color:seagreen"></i></a></td>
                             <td>
