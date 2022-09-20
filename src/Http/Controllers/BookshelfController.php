@@ -404,10 +404,7 @@ class BookshelfController extends Controller
     {
         //No conversion to tei, xml, txt and zip
 
-        //Todo epub is broken
-        //$mtypes = ['pdf', 'word', 'html', 'epub'];
-
-        $mtypes = ['pdf', 'word', 'html'];
+        $mtypes = ['pdf', 'word', 'html', 'epub'];
         $linkType = (isset($link['type'])) ? $link['type'] : 'zip';
 
         $noConversion = ($linkType == 'pdf' && $link['convertible'] == true)
