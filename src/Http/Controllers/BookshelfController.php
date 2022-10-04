@@ -98,7 +98,7 @@ class BookshelfController extends Controller
         //Check if zip already unzipped!
         if (strpos($request['fileName'], '.zip') !== false) {
             $name = substr(basename($request['fileName']), 0, strpos(basename($request['fileName']), "."));
-            $fileToConvert = 'DLBTUploads/unzipped/' . $name . '\\' . 'tei.xml';
+            $fileToConvert = 'YARMDBUploads/unzipped/' . $name . '\\' . 'tei.xml';
             //check if file exist
             if (storage::exists($fileToConvert)) {
                 //check if file is readable
@@ -470,7 +470,7 @@ class BookshelfController extends Controller
         $type = 'xml';
         //loadFile and check if file is TEI
         if ($book->checked == 'false' && storage::exists('DLBTUploads/' . $name)) {
-            $fileContent = storage::get('DLBTUploads/' . $name);
+            $fileContent = storage::get('YARMDBUploads/' . $name);
             if (strpos($fileContent, 'TEI version') !== false || strpos($fileContent, 'teiHeader') !== false) {
                 $book->readable = 'true';
                 $book->checked = 'true';
@@ -540,7 +540,7 @@ class BookshelfController extends Controller
                 ? $book->identifier_id . '_' . $book->ref_id . '.' . $type : basename($file);
 
             $name = substr($file_name, 0, strpos($file_name, "."));
-            $path_name = 'DLBTUploads/downloaded/' . $name . '/' . $file_name;
+            $path_name = 'YARMDBUploads/downloaded/' . $name . '/' . $file_name;
 
             self::ifFileDontExistAddIt($file, $path_name);
 
@@ -549,7 +549,7 @@ class BookshelfController extends Controller
             $book->save();
 
             if (storage::exists($path_name) === false && $book->readable != 'true')
-                $path_name = storage_path() . '/app/DLBTUploads/downloaded/' . $name . '/' . $file_name;
+                $path_name = storage_path() . '/app/YARMDBUploads/downloaded/' . $name . '/' . $file_name;
             $book->readable = (storage::exists($path_name) === false && $book->readable != 'true')
                 ? ((ReadableParserController::checkIfPDFIsReadable($path_name)) ? 'true' : 'false') : 'false';
 
@@ -591,12 +591,12 @@ class BookshelfController extends Controller
     private static function fileExistInUploads($book, $file)
     {
         $file_name = basename($file);
-        $path_name = '/DLBTUploads/' . $file_name;
+        $path_name = '/YARMDBUploads/' . $file_name;
         if (storage::exists($path_name) == true) {
             if ($book->readable != 'true') {
-                $book->readable = (ReadableParserController::checkIfPDFIsReadable(storage_path() . '/app/DLBTUploads/' . $file_name)) ? 'true' : 'false';
+                $book->readable = (ReadableParserController::checkIfPDFIsReadable(storage_path() . '/app/YARMDBUploads/' . $file_name)) ? 'true' : 'false';
                 $book->save();
-                return (bool)ReadableParserController::checkIfPDFIsReadable(storage_path() . '/app/DLBTUploads/' . $file_name);
+                return (bool)ReadableParserController::checkIfPDFIsReadable(storage_path() . '/app/YARMDBUploads/' . $file_name);
             }
         }
         return true;

@@ -3,7 +3,7 @@
         <div class="card bookshelf mt-3">
             <div class="card-header">
                 <h5>
-                    {!! \App\Http\Controllers\ExportController::reformatBladeExport(view('dlbt.styles.format_as_' . App\Models\Style::getNameStyle(), array('ref'=> $record['ref']))->render()) !!}
+                    {!! \App\Http\Controllers\ExportController::reformatBladeExport(view('ydbviews.styles.format_as_' . App\Models\Style::getNameStyle(), array('ref'=> $record['ref']))->render()) !!}
                 </h5>
             </div>
             <div class="card-body">
@@ -30,7 +30,7 @@
                                 @if ($file['downloaded'] == 'true')
                                     {!! 'On external Server<br/>' !!}
                                 @else
-                                    {!! 'On Server DLBT<br/>' !!}
+                                    {!! 'On Server ' . strtolower(config('yarm.sys_name')) . '<br/>' !!}
                                 @endif
 
                                 @php(($fileName = (strlen($file['fileName']) > 40) ? substr($file['fileName'], 0, 40) . '...' : $file['fileName']))
@@ -43,14 +43,14 @@
                                 @php(($filePath = ($file['downloaded'] != 'false') ? $file['pathAndName'] : $file['fileName']))
                             </td>
                             <td><a title="@lang('Download file')"
-                                   href="/dlbt/downloadFile/?name={{ $filePath }}&{{$type}}_id={{$fileID}}&Downloaded={{$file['downloaded']}}&Readable={{$file['readable']}}"><i
+                                   href="/{{strtolower(config('yarm.sys_name'))}}/downloadFile/?name={{ $filePath }}&{{$type}}_id={{$fileID}}&Downloaded={{$file['downloaded']}}&Readable={{$file['readable']}}"><i
                                         class="fa fa-download mr-1"
                                         style="color:seagreen"></i></a></td>
                             <td>
                                 @foreach ($file['formats'] as $format)
 
                                     <a title="@lang('Download as') {{ strtoupper($format) }}"
-                                       href="/dlbt/downloadFileAs/?convertible={{$file['convertible']}}&fileFormat={{$file['type']}}&convFormat={{$format}}&file={{$filePath}}&id={{$file['id']}}&type={{$type}}&fileId={{$fileID}}">
+                                       href="/{{strtolower(config('yarm.sys_name'))}}/downloadFileAs/?convertible={{$file['convertible']}}&fileFormat={{$file['type']}}&convFormat={{$format}}&file={{$filePath}}&id={{$file['id']}}&type={{$type}}&fileId={{$fileID}}">
                                         <img style="display: inline-block; width: 15px" src="{{asset('Images/' . $format . '.png')}}">
                                     </a>
                                 @endforeach

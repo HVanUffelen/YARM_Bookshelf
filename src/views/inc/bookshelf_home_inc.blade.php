@@ -1,7 +1,7 @@
 {{App()->setLocale(Session::get('userLanguage'))}}
 @php
     //Todo move to controller
-    $records = Yarm\Bookshelf\Http\Controllers\BookshelfController::getBookshelfData('Sidebar', 5);
+    $records = Yarm\Bookshelf\Http\Controllers\AdminKeywordsController::getBookshelfData('Sidebar', 5);
 @endphp
 <div class="card bookshelf sidebar">
     <div class="card-header">

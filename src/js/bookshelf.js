@@ -45,7 +45,7 @@
                         if (form.find('input#identifierID').val() !== undefined)
                             identifierID = form.find('input#identifierID').val();
 
-                        var url = "/dlbt/bookshelf?Id=" + fileID + "&refId=" + refID + "&identifierId=" + identifierID + "&fileName=" + fileName;
+                        var url = "/" + YARM.sys_name + "/bookshelf?Id=" + fileID + "&refId=" + refID + "&identifierId=" + identifierID + "&fileName=" + fileName;
 
                         $('#btn-add-to-bookshelf').html('Sending ...');
 
@@ -86,7 +86,7 @@
                 var id = $(this).data('id');
                 $.ajax({
                     type: 'GET',
-                    url: '/dlbt/bookshelfDelete?Id=' + id,
+                    url: '/' + YARM.sys_name + '/bookshelfDelete?Id=' + id,
                     success: function (data) {
                         $('#modalDeleteBookshelf').modal('hide');
                         window.location.reload();
@@ -102,7 +102,7 @@
 
             function fetch_data() {
                 $.ajax({
-                    url: '/dlbt/bookshelf/bookshelfFetch?sidebar=true',
+                    url: '/' + YARM.sys_name +'/bookshelf/bookshelfFetch?sidebar=true',
                     success: function (data) {
                         $('.bookshelf-sidebar-content').html('');
                         $('.bookshelf-sidebar-content').html(data);
