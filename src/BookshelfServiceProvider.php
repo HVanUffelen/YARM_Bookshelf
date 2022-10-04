@@ -15,7 +15,7 @@ class BookshelfServiceProvider extends ServiceProvider{
         $this->mergeConfigFrom(__DIR__ . '/config/bookshelf.php','bookshelf');
         $this->publishes([
             //__DIR__ . '/config/bookshelf.php' => config_path('bookshelf.php'),
-            __DIR__.'/views' => resource_path('views/vendor/bookshelf'),
+            //__DIR__.'/views' => resource_path('views/vendor/bookshelf'),
             // Assets
             __DIR__.'/js' => resource_path('js/vendor'),
         ],'bookshelf');

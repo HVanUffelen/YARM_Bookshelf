@@ -33,7 +33,7 @@
                                 @if ($file['downloaded'] == 'true')
                                     {!! 'On external Server<br/>' !!}
                                 @else
-                                    {!! 'On Server!!}{{'xxxxx'}}{!!'<br/>' !!}
+                                    {{'On Server' . strtoupper(config('yarm.sys_name')) .'!!<br/>'}}
                                 @endif
 
                                 @php(($fileName = (strlen($file['fileName']) > 40) ? substr($file['fileName'], 0, 40) . '...' : $file['fileName']))
@@ -70,3 +70,5 @@
         {{ $rows->links() }}
     </div>
 @endif
+
+
