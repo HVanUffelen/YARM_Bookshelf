@@ -1,3 +1,6 @@
+@php
+    //dd ($records)
+@endphp
 @if (isset($records))
     @foreach ($records as $record)
         <div class="card bookshelf mt-3">
@@ -30,7 +33,7 @@
                                 @if ($file['downloaded'] == 'true')
                                     {!! 'On external Server<br/>' !!}
                                 @else
-                                    {!! 'On Server ' . strtolower(config('yarm.sys_name')) . '<br/>' !!}
+                                    {!! 'On Server!!}{{strtoupper(config('yarm.sys_name'))}} {!!'<br/>' !!}
                                 @endif
 
                                 @php(($fileName = (strlen($file['fileName']) > 40) ? substr($file['fileName'], 0, 40) . '...' : $file['fileName']))
@@ -38,17 +41,16 @@
 
                                 {!! $comment!=""?'(' . $comment . ')<br/>':''!!}
                                 {!! $fileName!=""?'[' . $fileName . ']':''!!}
-                                @php($fileID = (($file['file_id'])? $file['file_id'] : $file['identifier_id']))
+                                @php($fileID = (($file['file_id'])? $file['file_id']: $file['identifier_id']))
                                 @php($type = (($file['file_id'])? 'file': 'identifier'))
-                                @php(($filePath = ($file['downloaded'] != 'false') ? $file['pathAndName'] : $file['fileName']))
                             </td>
-                            <td><a title="@lang('Download file')"
-                                   href="/{{strtolower(config('yarm.sys_name'))}}/downloadFile/?name={{ $filePath }}&{{$type}}_id={{$fileID}}&Downloaded={{$file['downloaded']}}&Readable={{$file['readable']}}"><i
+                            <td><a title="@lang('Download original file')"
+                                   href="/{{strtolower(config('yarm.sys_name'))}}/downloadFile/?action=original&format=original&name={{ $file['fileName']}}&fileId={{$fileID}}"><i
                                         class="fa fa-download mr-1"
                                         style="color:seagreen"></i></a></td>
                             <td>
                                 @foreach ($file['formats'] as $format)
-
+                                    @php(($filePath = ($file['downloaded'] != 'false') ? $file['pathAndName'] : $file['fileName']))
                                     <a title="@lang('Download as') {{ strtoupper($format) }}"
                                        href="/{{strtolower(config('yarm.sys_name'))}}/downloadFileAs/?convertible={{$file['convertible']}}&fileFormat={{$file['type']}}&convFormat={{$format}}&file={{$filePath}}&id={{$file['id']}}&type={{$type}}&fileId={{$fileID}}">
                                         <img style="display: inline-block; width: 15px" src="{{asset('Images/' . $format . '.png')}}">
