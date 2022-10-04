@@ -71,6 +71,15 @@ class BookshelfController extends Controller
         //return is no id!!
         $record['file_id'] = (isset($request->Id)) ? (int)$request->Id : 0;
         $record['identifier_id'] = (isset($request->identifierId)) ? (int)$request->identifierId : 0;
+
+        //Look for file_id
+        //Todo get file_id with script
+        if (isset($request->identifierId) && $record['identifier_id'] != 0 && $record['file_id'] === 0){
+            $fileId = Identifier::where('id','=',$record['identifier_id'])->first()['file_id'];
+            if (isset($fileId) && $fileId != 0)
+                $record['file_id'] = $fileId;
+        }
+
         if ($record['file_id'] == 0 && $record['identifier_id'] == 0)
             return Response::json(array('success' => false, 'errors' => __('Unknown error.')), 400);
 
