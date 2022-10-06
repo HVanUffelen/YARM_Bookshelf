@@ -74,8 +74,8 @@ class BookshelfController extends Controller
 
         //Look for file_id
         //Todo get file_id with script
-        if (isset($request->identifierId) && $record['identifier_id'] != 0 && $record['file_id'] === 0){
-            $fileId = Identifier::where('id','=',$record['identifier_id'])->first()['file_id'];
+        if (isset($request->identifierId) && $record['identifier_id'] != 0 && $record['file_id'] === 0) {
+            $fileId = Identifier::where('id', '=', $record['identifier_id'])->first()['file_id'];
             if (isset($fileId) && $fileId != 0)
                 $record['file_id'] = $fileId;
         }
@@ -449,7 +449,6 @@ class BookshelfController extends Controller
                 $type = 'pdf';
                 $book->type = $type;
                 $book->checked = 'true';
-                $book->save();
                 $convertible = true;
             }
         } else if (strpos(strtolower($name), '.xml') !== false) {
@@ -468,8 +467,8 @@ class BookshelfController extends Controller
             $fileInfo = pathinfo($name);
             $type = (isset($fileInfo['extension'])) ? $fileInfo['extension'] : 'Unknown type';
             $book->type = $type;
-            $book->save();
         }
+        $book->save();
         return array($convertible, $book->type, $book->downloaded, $book->pathAndName);
     }
 
