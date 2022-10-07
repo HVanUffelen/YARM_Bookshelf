@@ -446,8 +446,7 @@ class BookshelfController extends Controller
         if ((strpos(strtolower($comment), 'tiff') === false)
             && is_numeric(strpos(strtolower($name), '.pdf'))) {
             if (self::checkIfPDFIsDownloadableAndReadable($name, $book, 'pdf')) {
-                $type = 'pdf';
-                $book->type = $type;
+                $book->type = 'pdf';
                 $book->checked = 'true';
                 $convertible = true;
             }
@@ -455,18 +454,17 @@ class BookshelfController extends Controller
             $forXML = self::forXML($name, $book, $convertible);
             $book = $forXML[0];
             $convertible = $forXML[1];
-            $type = $forXML[2];
+            if (!isset($book->type)) $book->type = $forXML[2];
 
         } else if (strpos(strtolower($name), 'http') !== false) {
             $forHTTP = self::forHTTP($name, $book, $typesForDownload, $convertible, $type ?? '');
             $book = $forHTTP[0];
             $convertible = $forHTTP[1];
-            $type = $forHTTP[2];
+            if (!isset($book->type)) $book->type = $forHTTP[2];
         }
-        if (!isset($type)) {
+        if (!isset($book->type)) {
             $fileInfo = pathinfo($name);
-            $type = (isset($fileInfo['extension'])) ? $fileInfo['extension'] : 'Unknown type';
-            $book->type = $type;
+            $book->type = (isset($fileInfo['extension'])) ? $fileInfo['extension'] : 'Unknown type';
         }
         $book->save();
         return array($convertible, $book->type, $book->downloaded, $book->pathAndName);
@@ -477,7 +475,7 @@ class BookshelfController extends Controller
     {
         $type = 'xml';
         //loadFile and check if file is TEI
-        if ($book->checked == 'false' && storage::exists('DLBTUploads/' . $name)) {
+        if ($book->checked == 'false' && storage::exists('YARMDBUploads/' . $name)) {
             $fileContent = storage::get('YARMDBUploads/' . $name);
             if (strpos($fileContent, 'TEI version') !== false || strpos($fileContent, 'teiHeader') !== false) {
                 $book->readable = 'true';
