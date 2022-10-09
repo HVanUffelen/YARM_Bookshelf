@@ -2,6 +2,6 @@
 
 return [
 
-  'bookshelf_present' => "True"
+  'bookshelf_present' => true
 
 ];
