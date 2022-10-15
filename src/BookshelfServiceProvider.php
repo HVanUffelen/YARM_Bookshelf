@@ -22,7 +22,7 @@ class BookshelfServiceProvider extends ServiceProvider{
 
 
         //after every update
-        //run   php artisan vendor:publish [--provider="Yarm\Bookshelf\BookshelfServiceProvider"][--tag="bookshelf"]  --force
+        //run   php artisan vendor:publish --provider="Yarm\Bookshelf\BookshelfServiceProvider" --tag="bookshelf"  --force
     }
 
     public function register()

@@ -6,7 +6,7 @@
         <div class="card bookshelf mt-3">
             <div class="card-header">
                 <h5>
-                    {!! \App\Http\Controllers\ExportController::reformatBladeExport(view('ydbviews.styles.format_as_' . App\Models\Style::getNameStyle(), array('ref'=> $record['ref']))->render()) !!}
+                    {!! \App\Http\Controllers\ExportController::reformatBladeExport(view('ydbviews.styles.format_as_' . strtolower(App\Models\Style::getNameStyle()), array('ref'=> $record['ref']))->render()) !!}
                 </h5>
             </div>
             <div class="card-body">

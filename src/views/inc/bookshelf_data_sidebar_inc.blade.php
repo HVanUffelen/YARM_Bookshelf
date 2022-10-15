@@ -2,7 +2,7 @@
     <ul>
         @foreach ($rows as $ref)
             <li>
-                @include('ydbviews.styles.format_as_' . App\Models\Style::getNameStyle())
+                @include('ydbviews.styles.format_as_' . strtolower(pp\Models\Style::getNameStyle())
             </li>
         @endforeach
     </ul>
