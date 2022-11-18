@@ -150,7 +150,7 @@ class BookshelfController extends Controller
     public function bookshelfForm(Request $request)
     {
         //Check if User has Permissions
-        list($access,$path) = Auth\LoginController::CheckLoginVerification();
+        list($access,$path) = \App\Http\Controllers\Auth\LoginController::CheckLoginVerification();
         if ($access == false) return redirect($path);
 
         //Hide layout when user is Typo3DLBT
