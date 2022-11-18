@@ -3,6 +3,7 @@
     //Todo move to controller
     $records = Yarm\Bookshelf\Http\Controllers\BookshelfController::getBookshelfData('Sidebar', 5);
 @endphp
+<br>
 <div class="card bookshelf sidebar">
     <div class="card-header">
         <h4>@lang('Bookshelf recently added') <a title="Info" data-placement="top" data-toggle="popover"
